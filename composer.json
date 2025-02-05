@@ -1,5 +1,5 @@
 {
-    "name": "antoksa/callable-that",
+    "name": "antoksa/callable-that-proxy",
     "description": "To be done",
     "type": "library",
     "require": {
