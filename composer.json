@@ -14,6 +14,11 @@
             "Antoksa\\CallableThat\\": "src/"
         }
     },
+  "autoload-dev": {
+    "psr-4": {
+      "Antoksa\\CallableThat\\Tests\\": "tests/"
+    }
+  },
     "authors": [
         {
             "name": "Anton Mykhailovskyi"
