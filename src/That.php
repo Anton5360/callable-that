@@ -4,6 +4,11 @@ namespace Antoksa\CallableThat;
 
 use LogicException;
 
+/**
+ * @template T of object
+ *
+ * @mixin T
+ */
 class That
 {
     private $method = null;
