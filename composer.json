@@ -1,28 +1,44 @@
 {
-    "name": "antoksa/callable-that-proxy",
-    "description": "To be done",
-    "type": "library",
-    "require": {
-      "php": "^7.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^6.5"
-    },
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Antoksa\\CallableThat\\": "src/"
-        }
-    },
+  "name": "antoksa/callable-that-proxy",
+  "description": "Proxy to create a callable from a 'dynamic' object during runtime",
+  "keywords": [
+    "antoksa",
+    "that",
+    "proxy",
+    "callable",
+    "runtime",
+    "dynamic"
+  ],
+  "type": "library",
+  "require": {
+    "php": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Anton5360/callable-that",
+  "autoload": {
+    "psr-4": {
+      "Antoksa\\CallableThat\\": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-4": {
       "Antoksa\\CallableThat\\Tests\\": "tests/"
     }
   },
-    "authors": [
-        {
-            "name": "Anton Mykhailovskyi"
-        }
-    ],
-    "minimum-stability": "stable"
+  "authors": [
+    {
+      "name": "Anton Mykhailovskyi",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
