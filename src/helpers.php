@@ -5,12 +5,11 @@ namespace Antoksa\CallableThat;
 if (! function_exists('that')) {
     /**
      * @template T of object
-     * @template H of class-string<T>|null
      *
-     * @param H $class
-     * @return (H is null ? That : That<T>)
+     * @param T|(class-string<T>|null) $class Type (must be classed string; object declaration is for IDE autocomplete)
+     * @return That|T|That<T>
      */
     function that(string $class = null, array $args = [], string $method = '', string $property = ''): That {
-        return That::make(compact('method', 'args', 'property'));
+        return That::make(compact('class', 'method', 'args', 'property'));
     }
 }
