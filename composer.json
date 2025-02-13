@@ -10,9 +10,6 @@
     "runtime",
     "dynamic"
   ],
-  "files": [
-    "src/helpers.php"
-  ],
   "type": "library",
   "require": {
     "php": "^7.0"
@@ -25,7 +22,10 @@
   "autoload": {
     "psr-4": {
       "Antoksa\\CallableThat\\": "src/"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
