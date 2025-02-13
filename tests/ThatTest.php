@@ -64,6 +64,7 @@ class ThatTest extends TestCase
             // Callable method with args
             [[(new That())->withArgs('first', 'second'), 'toString'], Dummy::DEFAULT.'_first_second'],
             [(new That())->call('toString')->withArgs('first', 'second'), Dummy::DEFAULT.'_first_second'],
+            [(new That())->call('toString', ['first', 'second']), Dummy::DEFAULT.'_first_second'],
             [(new That('', ['first', 'second'], 'toString')), Dummy::DEFAULT.'_first_second'],
 
             // Callable property
