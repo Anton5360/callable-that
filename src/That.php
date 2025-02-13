@@ -16,10 +16,10 @@ class That
     private $args;
 
     /**
-     * @param T|class-string<T>|null $class Type (must be classed string; object declaration is for IDE autocomplete)
+     * @param T|class-string<T> $class Type (must be classed string; object declaration is for IDE autocomplete)
      */
     public function __construct(
-        string $class = null,
+        string $class = '',
         array $args = [],
         string $method = '',
         string $property = ''
@@ -94,7 +94,7 @@ class That
      * @param T $class
      * @return T|That<T>
      */
-    public function setClass($class)
+    public function setClass(string $class): self
     {
         return $this;
     }
@@ -106,9 +106,9 @@ class That
      */
     public static function make(array $config = []): self
     {
-        return (new self($config['class'] ?? null))
+        return (new self())
             ->call($config['method'] ?? '', $config['args'] ?? [])
             ->get($config['property'] ?? '')
-            ->setClass($config['class'] ?? null);
+            ->setClass($config['class'] ?? '');
     }
 }
