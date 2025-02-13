@@ -2,7 +2,7 @@
 
 namespace Antoksa\CallableThatProxy\Tests;
 
-use Antoksa\CallableThat\That;
+use Antoksa\CallableThatProxy\That;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
