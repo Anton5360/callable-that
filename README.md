@@ -67,19 +67,19 @@ array_map(
 ### Call method
 [that(), 'method']
 that()->call('method')
-that(null, [], 'method') # Not cool, but it changes with php8 named args
+that('', [], 'method') # Not cool, but it changes with php8 named args
 
 
 ### Add arguments
 [that()->withArgs($arg1, $arg2), 'method'],
 that()->call('method', [$arg1, $arg2])
-[that(null, [$arg1, $arg2]), 'method'],
+[that('', [$arg1, $arg2]), 'method'],
 
 
 ### Get Property
 that()->property,
 that()->get('property'),
-that(null, [], '', 'property'), # Not cool, but it changes with php8 named args
+that('', [], '', 'property'), # Not cool, but it changes with php8 named args
 ```
 
 ### Laravel Collection Advantage
