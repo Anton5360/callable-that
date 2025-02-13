@@ -1,11 +1,12 @@
 {
   "name": "antoksa/callable-that-proxy",
-  "description": "Proxy to create a callable from a 'dynamic' object during runtime",
+  "description": "Lightweight proxy to create a callable from a 'dynamic' object during runtime",
   "keywords": [
     "antoksa",
     "that",
     "proxy",
     "callable",
+    "lightweight",
     "runtime",
     "dynamic"
   ],

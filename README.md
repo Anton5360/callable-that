@@ -1,7 +1,16 @@
 # Callable "that" Proxy
 
-Proxy provides ability to create a callable for an object during runtime
+## "That" philosophy
+Lightweight proxy "that" provides ability to create a callable for an object during runtime.
 
+The idea of "that" is to reference the way how you usually create a callable for particular object. 
+```php
+[$this, 'method'] # For particular object
+
+[that(), 'method'] # For an expected object which is about to be accessed during the loop
+```
+
+## Concept
 How often did you need to perform `array_map()` like this?
 
 ```php
@@ -28,35 +37,51 @@ array_map(
 );
 ```
 
-Unfortunately, even though we can create objects like `[$this, 'method']` or `[$this->method(...)]`,
+Unfortunately, even though we can create objects like `[$this, 'method']`,
 but we can't access the object during iteration for runtime (e.g. `array_map()`, `array_filter()` etc.)
 
-Lightweight proxy "that" is to represent an object during runtime:
+Lightweight proxy "that" brings this handy feature:
 ```php
 array_map(
-    [that(), 'method'],
-# Or   that()->method(...),
-# Or   that()->call('method'),
+    [that(), 'method'], # static fn (MyClass $object): string => $object->method()
     $objects,
 );
 
 array_map(
-    [that()->withArgs($arg1, $arg2)->method(...)],
-# Or   that(args: [$arg1, $arg2])->method(...),
-# Or   [that(args: [$arg1, $arg2]), 'method'],
-# Or   [that()->withArgs($arg1, $arg2), 'method'],
+    [that()->withArgs($arg1, $arg2), 'method'], # static fn (MyClass $object): string => $object->method($arg1, $arg2),
     $objects,
 );
 
 array_map(
-    that()->property,
-#  Or  that()->get('property'),
+    that()->property, # static fn (MyClass $object): string => $object->property
     $objects,
 );
 ```
 
 
-## Laravel Collection advantage
+## Usage
+
+### Basic
+
+```php
+### Call method
+[that(), 'method']
+that()->call('method')
+that(null, [], 'method') # Not cool, but it changes with php8 named args
+
+
+### Add arguments
+[that()->withArgs($arg1, $arg2), 'method'],
+[that(null, [$arg1, $arg2]), 'method'],
+
+
+### Get Property
+that()->property,
+that()->get('property'),
+that(null, [], '', 'property'), # Not cool, but it changes with php8 named args
+```
+
+### Laravel Collection advantage
 
 Yes, Laravel got `HighOrderedProxy` which allows to the chain of operations conveniently,
 but IDE loses the type for it:
@@ -68,14 +93,33 @@ collect($objects)
     ->filter
     ->anotherMethod($arg1)
     ->all();
+    
+collect($objects)
+    ->map
+    ->existingCollectionMethodWhichReturnsBool() # Even worse, now IDE thinks that it returns bool here
+    ->filter # Static analysis tools complains
+    ->anotherMethod($arg1)
+    ->all();
 ```
 
-That's why I personally for this case would prefer to avoid `HighOrderedProxy`,
- but what we can do with `that()` proxy now:
+That's why I personally for this case would prefer to avoid `HighOrderedProxy`.
+It`s where "that" proxy comes handy:
 
 ```php
 collect($objects)
-    ->map(that()->method(...))
-    ->filter([that()->withArgs($arg1), 'anotherMethod'])
+    ->map([that(), 'method'])
+    ->filter(that()->withArgs($arg1)->call('anotherMethod'))
     ->all(); # Return type never gets lost
+```
+
+### Note
+First argument (class) **is not** required, however **when provided**, you take advantage of **IDE autocompletion**:
+```php
+# Partial support; IDE does not suggest method, but it`s clickable as soon as you type it
+[that(MyClass::class), 'method']
+[that()->setClass(MyClass::class), 'method']
+
+# Full support
+that(MyClass::class)->property
+that()->setClass(MyClass::class)->property
 ```
