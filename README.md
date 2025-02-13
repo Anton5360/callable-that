@@ -122,4 +122,9 @@ First argument (class) **is not** required, however **when provided**, you take 
 # Full support
 that(MyClass::class)->property
 that()->setClass(MyClass::class)->property
+
+# No support; However, eventually, you never need that unless
+# you want to call method which exists in That class
+that(MyClass::class)->call('method')
+that(MyClass::class)->get('property')
 ```
