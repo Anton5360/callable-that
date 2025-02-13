@@ -5,9 +5,9 @@ Lightweight proxy "that" provides ability to create a callable for an object dur
 
 The idea of "that" is to reference the way how you usually create a callable for particular object. 
 ```php
-[$this, 'method'] # For particular object
+$this->method(...) # For particular object
 
-[that(), 'method'] # For an expected object which is about to be accessed during the loop
+that()->method(...) # For an expected object which is about to be accessed during the loop
 ```
 
 ## Concept
@@ -43,12 +43,12 @@ but we can't access the object during iteration for runtime (e.g. `array_map()`,
 Lightweight proxy "that" brings this handy feature:
 ```php
 array_map(
-    [that(), 'method'], # static fn (MyClass $object): string => $object->method()
+    that()->method(...), # static fn (MyClass $object): string => $object->method()
     $objects,
 );
 
 array_map(
-    [that()->withArgs($arg1, $arg2), 'method'], # static fn (MyClass $object): string => $object->method($arg1, $arg2),
+    that()->withArgs($arg1, $arg2)->method(...), # static fn (MyClass $object): string => $object->method($arg1, $arg2),
     $objects,
 );
 
@@ -66,19 +66,23 @@ array_map(
 ```php
 ### Call method
 [that(), 'method']
+that()->method(...)
 that()->call('method')
-that(null, [], 'method') # Not cool, but it changes with php8 named args
+that(method: 'method')
 
 
 ### Add arguments
-[that()->withArgs($arg1, $arg2), 'method'],
-[that(null, [$arg1, $arg2]), 'method'],
+[that()->withArgs($arg1, $arg2), 'method']
+that()->withArgs($arg1, $arg2)->method(...)
+that()->call('method', [$arg1, $arg2])
+[that(args: [$arg1, $arg2]), 'method']
+that(args: [$arg1, $arg2])->method(...)
 
 
 ### Get Property
-that()->property,
-that()->get('property'),
-that(null, [], '', 'property'), # Not cool, but it changes with php8 named args
+that()->property
+that()->get('property')
+that(property: 'property')
 ```
 
 ### Laravel Collection Advantage
@@ -107,26 +111,31 @@ It`s where "that" proxy comes handy:
 
 ```php
 collect($objects)
-    ->map([that(), 'method'])
-    ->filter(that()->withArgs($arg1)->call('anotherMethod'))
+    ->map([that()->method(...))
+    ->filter(that()->withArgs($arg1)->anotherMethod(...))
     ->all(); # Return type never gets lost
 ```
 
 ### Note
 First argument (class) **is not** required, however **when provided**, you take advantage of **IDE autocompletion**:
 ```php
-# Partial support; IDE does not suggest method, but it`s clickable as soon as you type it
-[that(MyClass::class), 'method']
-[that()->setClass(MyClass::class), 'method']
-
-
 # Full support
+that(MyClass::class)->method(...)
+that()->setClass(MyClass::class)->method(...)
 that(MyClass::class)->property
 that()->setClass(MyClass::class)->property
+
+
+# Partial support; IDE does not suggest method,
+# but it`s clickable as soon as you type it
+[that(MyClass::class), 'method']
+[that()->setClass(MyClass::class), 'method']
 
 
 # No support; However, eventually, you never need that unless
 # you want to call method which exists in That class
 that(MyClass::class)->call('method')
+that(MyClass::class, method: 'method')
 that(MyClass::class)->get('property')
+that(MyClass::class, property: 'property')
 ```
