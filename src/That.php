@@ -11,9 +11,9 @@ use LogicException;
  */
 class That
 {
-    private $method;
-    private $property;
-    private $args;
+    private string $method;
+    private string $property;
+    private array $args;
 
     /**
      * @param T|class-string<T>|null $class Type (must be classed string; object declaration is for IDE autocomplete)
@@ -31,9 +31,8 @@ class That
 
     /**
      * @param T $object
-     * @return mixed
      */
-    public function __invoke($object)
+    public function __invoke(object $object): mixed
     {
         if ($this->method) {
             return $this->__call($this->method, [$object]);
@@ -51,9 +50,8 @@ class That
 
     /**
      * @param array{0: T} $arguments
-     * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         return $arguments[0]->$name(...$this->args);
     }
@@ -81,7 +79,7 @@ class That
     /**
      * @return T|That<T>
      */
-    public function withArgs(...$args): self
+    public function withArgs(mixed ...$args): self
     {
         $this->args = $args;
 
@@ -94,7 +92,7 @@ class That
      * @param T $class
      * @return T|That<T>
      */
-    public function setClass($class)
+    public function setClass(string $class)
     {
         return $this;
     }

@@ -28,7 +28,7 @@ class ThatTest extends TestCase
     /**
      * @dataProvider callables
      */
-    public function test_correctly_creates_callable($callable, string $expected)
+    public function test_correctly_creates_callable(mixed $callable, string $expected)
     {
         $this->assertTrue(is_callable($callable));
 
@@ -38,8 +38,8 @@ class ThatTest extends TestCase
     public function test_correctly_iterates_using_that_proxy()
     {
         $this->assertSame(
-            [1, 2, 3],
-            array_map(
+            expected: [1, 2, 3],
+            actual: array_map(
                 (new That())->call('count'),
                 [new Dummy(), new Dummy(), new Dummy()]
             )
@@ -55,22 +55,37 @@ class ThatTest extends TestCase
 
     public static function callables(): array
     {
-        return [
+        $cases = [
             // Callable method
             [[(new That()), 'toString'], Dummy::DEFAULT],
             [(new That())->call('toString'), Dummy::DEFAULT],
-            [(new That(null, [], 'toString')), Dummy::DEFAULT],
+            [(new That(method: 'toString')), Dummy::DEFAULT],
 
             // Callable method with args
             [[(new That())->withArgs('first', 'second'), 'toString'], Dummy::DEFAULT.'_first_second'],
             [(new That())->call('toString')->withArgs('first', 'second'), Dummy::DEFAULT.'_first_second'],
-            [(new That(null, ['first', 'second'], 'toString')), Dummy::DEFAULT.'_first_second'],
+            [(new That())->call('toString', ['first', 'second']), Dummy::DEFAULT.'_first_second'],
+            [(new That(args: ['first', 'second'], method: 'toString')), Dummy::DEFAULT.'_first_second'],
 
             // Callable property
             [(new That())->get('value'), Dummy::DEFAULT_PROP],
             [(new That())->value, Dummy::DEFAULT_PROP],
-            [(new That(null, [], '', 'value')), Dummy::DEFAULT_PROP],
+            [(new That(property: 'value')), Dummy::DEFAULT_PROP],
         ];
+
+        if (version_compare(PHP_VERSION, '8.1', '>=')) {
+            array_push(
+                $cases,
+
+                // Callable method
+                [(new That())->toString(...), Dummy::DEFAULT],
+
+                // Callable method with args
+                [(new That())->withArgs('first', 'second')->toString(...), Dummy::DEFAULT.'_first_second']
+            );
+        }
+
+        return $cases;
     }
 
 }
