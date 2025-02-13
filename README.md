@@ -72,6 +72,7 @@ that(null, [], 'method') # Not cool, but it changes with php8 named args
 
 ### Add arguments
 [that()->withArgs($arg1, $arg2), 'method'],
+that()->call('method', [$arg1, $arg2])
 [that(null, [$arg1, $arg2]), 'method'],
 
 
