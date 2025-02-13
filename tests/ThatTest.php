@@ -59,17 +59,17 @@ class ThatTest extends TestCase
             // Callable method
             [[(new That()), 'toString'], Dummy::DEFAULT],
             [(new That())->call('toString'), Dummy::DEFAULT],
-            [(new That(null, [], 'toString')), Dummy::DEFAULT],
+            [(new That('', [], 'toString')), Dummy::DEFAULT],
 
             // Callable method with args
             [[(new That())->withArgs('first', 'second'), 'toString'], Dummy::DEFAULT.'_first_second'],
             [(new That())->call('toString')->withArgs('first', 'second'), Dummy::DEFAULT.'_first_second'],
-            [(new That(null, ['first', 'second'], 'toString')), Dummy::DEFAULT.'_first_second'],
+            [(new That('', ['first', 'second'], 'toString')), Dummy::DEFAULT.'_first_second'],
 
             // Callable property
             [(new That())->get('value'), Dummy::DEFAULT_PROP],
             [(new That())->value, Dummy::DEFAULT_PROP],
-            [(new That(null, [], '', 'value')), Dummy::DEFAULT_PROP],
+            [(new That('', [], '', 'value')), Dummy::DEFAULT_PROP],
         ];
     }
 
