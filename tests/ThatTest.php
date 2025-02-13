@@ -1,6 +1,6 @@
 <?php
 
-namespace Antoksa\CallableThat\Tests;
+namespace Antoksa\CallableThatProxy\Tests;
 
 use Antoksa\CallableThat\That;
 use LogicException;

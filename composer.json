@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Anton5360/callable-that",
   "autoload": {
     "psr-4": {
-      "Antoksa\\CallableThat\\": "src/"
+      "Antoksa\\CallableThatProxy\\": "src/"
     },
     "files": [
       "src/helpers.php"
@@ -29,7 +29,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Antoksa\\CallableThat\\Tests\\": "tests/"
+      "Antoksa\\CallableThatProxy\\Tests\\": "tests/"
     }
   },
   "authors": [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Antoksa\CallableThat;
+use Antoksa\CallableThatProxy\That;
 
 if (! function_exists('that')) {
     /**

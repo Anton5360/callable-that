@@ -1,6 +1,6 @@
 <?php
 
-namespace Antoksa\CallableThat;
+namespace Antoksa\CallableThatProxy;
 
 use LogicException;
 
