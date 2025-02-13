@@ -1,6 +1,6 @@
 # Callable "that" Proxy
 
-## "That" philosophy
+## "That" Philosophy
 Lightweight proxy "that" provides ability to create a callable for an object during runtime.
 
 The idea of "that" is to reference the way how you usually create a callable for particular object. 
@@ -81,7 +81,7 @@ that()->get('property'),
 that(null, [], '', 'property'), # Not cool, but it changes with php8 named args
 ```
 
-### Laravel Collection advantage
+### Laravel Collection Advantage
 
 Yes, Laravel got `HighOrderedProxy` which allows to the chain of operations conveniently,
 but IDE loses the type for it:
